@@ -116,7 +116,7 @@ export default function App() {
       </div>
 
       {/* Budget Panel */}
-      <div className="w-full md:w-[40%] h-[40vh] md:h-full order-2 md:order-1 border-t md:border-t-0 md:border-r border-slate-800">
+      <div className="w-full md:w-[40%] h-[40vh] md:h-full order-2 md:order-1 border-t md:border-t-0 md:border-r border-white/5">
         <BudgetPanel />
       </div>
     </div>
