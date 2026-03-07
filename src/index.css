@@ -114,6 +114,22 @@ html, body, #root {
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
+/* Neon gold bordered card for budget panel */
+.neon-card {
+  background: linear-gradient(
+    160deg,
+    rgba(30, 41, 59, 0.8) 0%,
+    rgba(15, 23, 42, 0.6) 100%
+  );
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 1rem;
+  box-shadow:
+    0 0 12px rgba(251, 191, 36, 0.06),
+    0 0 1px rgba(251, 191, 36, 0.3),
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(251, 191, 36, 0.08);
+}
+
 /* Polished input fields */
 .input-polished {
   background: linear-gradient(
