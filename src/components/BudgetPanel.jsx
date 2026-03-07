@@ -1,44 +1,47 @@
 import { useState } from 'react'
 import useGameStore from '../lib/gameState'
-import { BILL_CATEGORIES, MONSTER_COLOR_HEX, formatCurrency } from '../lib/constants'
-import { ACHIEVEMENT_DEFS } from '../lib/achievements'
+import { BILL_CATEGORIES, MONSTER_COLOR_HEX, formatCurrency, getTierName, getIslandStageName } from '../lib/constants'
 import { playBillAdd, playBillRemove } from '../lib/soundManager'
 
-export default function BudgetPanel() {
+const CATEGORY_BG = {
+  housing: 'bg-red-900/30',
+  utilities: 'bg-yellow-900/30',
+  phone: 'bg-purple-900/30',
+  transport: 'bg-orange-900/30',
+  food: 'bg-green-900/30',
+  insurance: 'bg-blue-900/30',
+  entertainment: 'bg-pink-900/30',
+  other: 'bg-gray-900/30',
+}
+
+export default function BudgetPanel({ onOpenSettings }) {
   const {
-    kingdomName, income, bills, isBattling,
-    monthsCompleted, triggerPayday, resetMonth,
-    setIncome, addBill, removeBill, achievements,
+    kingdomName, income, bills, isBattling, level,
+    monthsCompleted, islandStage, totalBillsSlain,
+    triggerPayday, resetMonth,
+    setIncome, addBill, removeBill,
   } = useGameStore()
 
-  const [showAddBill, setShowAddBill] = useState(false)
-  const [newBillName, setNewBillName] = useState('')
-  const [newBillAmount, setNewBillAmount] = useState('')
-  const [newBillCategory, setNewBillCategory] = useState('housing')
+  const [billName, setBillName] = useState('')
+  const [billAmount, setBillAmount] = useState('')
+  const [billCategory, setBillCategory] = useState('housing')
 
   const totalBills = bills.reduce((sum, b) => sum + b.amount, 0)
   const surplus = income - totalBills
   const allPaid = bills.length > 0 && bills.every(b => b.isPaid)
+  const activeBills = bills.filter(b => !b.isPaid).length
 
-  // Recent achievements (latest 3, sorted by unlock time)
-  const recentAchievements = ACHIEVEMENT_DEFS
-    .filter(a => achievements[a.id])
-    .sort((a, b) => achievements[b.id] - achievements[a.id])
-    .slice(0, 3)
+  const tierName = getTierName(level)
+  const stageName = getIslandStageName(islandStage)
+  const currentMonth = new Date().toISOString().slice(0, 7)
 
-  const handleQuickAdd = (cat) => {
-    setNewBillCategory(cat.id)
-    setNewBillName(cat.label)
-    setShowAddBill(true)
-  }
-
-  const handleAddBill = () => {
-    if (!newBillName.trim() || !newBillAmount) return
-    addBill({ name: newBillName.trim(), amount: Number(newBillAmount), category: newBillCategory })
+  const handleAddBill = (e) => {
+    e.preventDefault()
+    if (!billName.trim() || !billAmount) return
+    addBill({ name: billName.trim(), amount: Number(billAmount), category: billCategory })
     playBillAdd()
-    setNewBillName('')
-    setNewBillAmount('')
-    setShowAddBill(false)
+    setBillName('')
+    setBillAmount('')
   }
 
   const handlePayday = async () => {
@@ -51,189 +54,201 @@ export default function BudgetPanel() {
   }
 
   return (
-    <div className="h-full overflow-y-auto panel-bg px-8 py-6 md:px-10 md:py-8 lg:px-12 flex flex-col gap-4">
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-1">
-        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-base shadow-lg shadow-amber-500/25">
-          <span>👑</span>
-        </div>
+    <div className="h-full flex flex-col" style={{ background: '#0a1628' }}>
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto px-6 py-6 md:px-8 md:py-7 space-y-4">
+
+        {/* Header */}
         <div>
-          <h2 className="font-pixel text-sm md:text-base text-amber-400 truncate">
-            {kingdomName ? `${kingdomName}` : 'Treasury'}
-          </h2>
-          <span className="font-sans text-xs text-slate-500">Treasury</span>
-        </div>
-      </div>
-
-      {/* Income Card */}
-      <div className="neon-card rounded-2xl p-5">
-        <label className="font-pixel text-xs text-amber-300 block mb-3">Monthly Income</label>
-        <div className="relative">
-          <span className="absolute left-5 top-1/2 -translate-y-1/2 text-amber-400/60 font-sans text-lg font-bold">$</span>
-          <input
-            type="number"
-            value={income || ''}
-            onChange={(e) => setIncome(e.target.value)}
-            placeholder="0"
-            className="input-polished w-full rounded-2xl pl-11 pr-5 py-4 text-white text-lg font-sans font-medium"
-          />
-        </div>
-      </div>
-
-      {/* Bills Card */}
-      <div className="neon-card rounded-2xl p-5 flex-1 min-h-0 flex flex-col">
-        <div className="flex items-center justify-between mb-3">
-          <label className="font-pixel text-xs text-amber-300">Monsters ({bills.length})</label>
-          <span className="font-sans text-sm text-slate-400 font-medium">{formatCurrency(totalBills)}</span>
-        </div>
-
-        {/* Existing bills */}
-        <div className="space-y-2 overflow-y-auto pr-1 flex-1 min-h-0 max-h-40">
-          {bills.map(bill => (
-            <div key={bill.id} className={`flex items-center gap-3 bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3 group transition-all hover:bg-white/[0.06] ${bill.isPaid ? 'opacity-50' : ''}`}>
-              <div
-                className="w-4 h-4 rounded-full shrink-0"
-                style={{ backgroundColor: MONSTER_COLOR_HEX[bill.category], boxShadow: `0 0 10px ${MONSTER_COLOR_HEX[bill.category]}50` }}
-              />
-              <span className="font-sans text-sm flex-1 truncate text-slate-200">{bill.name}</span>
-              <span className="font-sans text-sm text-white font-semibold">{formatCurrency(bill.amount)}</span>
-              {bill.isPaid && <span className="text-xs text-green-400 font-sans font-bold tracking-wider">SLAIN</span>}
-              {!bill.isPaid && (
-                <button
-                  onClick={() => { removeBill(bill.id); playBillRemove() }}
-                  className="text-slate-600 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 text-xl leading-none"
-                >
-                  &times;
-                </button>
-              )}
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="font-pixel text-emerald-400 uppercase tracking-widest" style={{ fontSize: '0.6rem' }}>
+                Your Kingdom Treasury
+              </p>
+              <p className="font-sans text-slate-500 uppercase text-xs tracking-wider mt-0.5">Payday Kingdom</p>
             </div>
-          ))}
-          {bills.length === 0 && (
-            <div className="py-4 text-center">
-              <p className="text-slate-500 text-sm font-sans">Add your first monster below</p>
-            </div>
-          )}
-        </div>
-
-        {/* Quick add: category buttons */}
-        {!showAddBill ? (
-          <div className="mt-3 pt-3 border-t border-white/[0.06]">
-            <label className="font-sans text-xs text-slate-500 block mb-2.5">Tap to add a bill:</label>
-            <div className="grid grid-cols-4 gap-2">
-              {BILL_CATEGORIES.map(cat => (
-                <button
-                  key={cat.id}
-                  onClick={() => handleQuickAdd(cat)}
-                  className="flex flex-col items-center gap-1 py-2.5 px-1 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-amber-400/30 hover:bg-amber-400/5 transition-all active:scale-95"
-                >
-                  <span className="text-lg">{cat.emoji}</span>
-                  <span className="font-sans text-[10px] text-slate-400">{cat.label}</span>
-                </button>
-              ))}
-            </div>
+            {onOpenSettings && (
+              <button
+                onClick={onOpenSettings}
+                className="text-slate-500 hover:text-slate-300 transition-colors p-1"
+                title="Settings"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.062 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                </svg>
+              </button>
+            )}
           </div>
-        ) : (
-          <div className="mt-3 pt-3 border-t border-white/[0.06] space-y-3">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-base">{BILL_CATEGORIES.find(c => c.id === newBillCategory)?.emoji}</span>
-              <span className="font-sans text-sm text-amber-300 font-medium">
-                New {BILL_CATEGORIES.find(c => c.id === newBillCategory)?.label} Bill
-              </span>
-            </div>
+          <h1 className="font-sans text-white font-bold text-2xl mt-2">
+            {kingdomName || 'My Kingdom'}
+          </h1>
+          <p className="font-sans text-slate-400 text-sm italic mt-1 leading-relaxed">
+            Income feeds the treasury, bills become monsters, and each payday advances {kingdomName || 'your kingdom'} into a richer month.
+          </p>
+        </div>
+
+        {/* Monthly Income Card */}
+        <div className="panel-card">
+          <div className="flex items-center justify-between mb-3">
+            <span className="panel-label">Monthly Income</span>
+            <span className="font-sans text-xs text-slate-500">{currentMonth}</span>
+          </div>
+          <div className="relative">
+            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-sans text-lg font-medium">$</span>
             <input
-              type="text"
-              value={newBillName}
-              onChange={(e) => setNewBillName(e.target.value)}
-              placeholder="Bill name"
-              className="input-polished w-full rounded-xl px-5 py-3.5 text-sm text-white font-sans"
-              autoFocus
+              type="number"
+              value={income || ''}
+              onChange={(e) => setIncome(e.target.value)}
+              placeholder="0"
+              className="panel-input w-full pl-11 pr-5 py-4 text-lg font-medium"
             />
-            <div className="relative">
-              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">$</span>
-              <input
-                type="number"
-                value={newBillAmount}
-                onChange={(e) => setNewBillAmount(e.target.value)}
-                placeholder="Amount"
-                className="input-polished w-full rounded-xl pl-10 pr-5 py-3.5 text-sm text-white font-sans"
-                onKeyDown={(e) => e.key === 'Enter' && handleAddBill()}
-              />
-            </div>
-            <div className="flex gap-2.5">
-              <button
-                onClick={handleAddBill}
-                className="flex-1 bg-gradient-to-r from-amber-500 to-amber-400 text-slate-900 font-sans text-sm font-bold py-3 rounded-xl transition-all active:scale-[0.97] shadow-lg shadow-amber-500/20"
-              >
-                Add Monster
-              </button>
-              <button
-                onClick={() => { setShowAddBill(false); setNewBillName(''); setNewBillAmount('') }}
-                className="px-4 py-3 rounded-xl bg-white/[0.05] border border-white/[0.08] text-slate-400 font-sans text-sm hover:text-white transition-all"
-              >
-                Cancel
-              </button>
-            </div>
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* Achievements Card — in the middle */}
-      <div className="neon-card rounded-2xl p-5">
-        <label className="font-pixel text-xs text-amber-300 block mb-3">Achievements</label>
-        {recentAchievements.length > 0 ? (
-          <div className="space-y-3">
-            {recentAchievements.map(ach => (
-              <div key={ach.id} className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center border border-amber-400/20">
-                  <span className="text-xl">{ach.icon}</span>
+        {/* Bills Section */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <span className="panel-label">Bills (Monsters to Slay)</span>
+            <span className="font-sans text-xs text-slate-500">{activeBills} active</span>
+          </div>
+
+          {/* Existing bills as individual cards */}
+          <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
+            {bills.map(bill => {
+              const cat = BILL_CATEGORIES.find(c => c.id === bill.category)
+              return (
+                <div key={bill.id} className={`panel-card ${bill.isPaid ? 'opacity-50' : ''}`}>
+                  <div className="flex items-start gap-3">
+                    <div className={`w-10 h-10 rounded-xl ${CATEGORY_BG[bill.category] || 'bg-gray-900/30'} flex items-center justify-center shrink-0 mt-0.5`}>
+                      <span className="text-lg">{cat?.emoji || '📋'}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-sans text-base font-bold text-white truncate">{bill.name}</span>
+                        <span className="font-sans text-base text-white font-bold shrink-0">{formatCurrency(bill.amount)}</span>
+                      </div>
+                      <div className="flex items-center justify-between mt-1">
+                        <span className="font-sans text-xs text-slate-500">{cat?.label || 'Other'}</span>
+                        <span className="font-sans text-xs text-slate-500 uppercase tracking-wider">{bill.category}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-end mt-2">
+                    {bill.isPaid ? (
+                      <span className="font-sans text-xs font-bold text-emerald-400 tracking-wider uppercase">Slain</span>
+                    ) : (
+                      <button
+                        onClick={() => { removeBill(bill.id); playBillRemove() }}
+                        className="font-sans text-xs text-red-400 uppercase tracking-wider border border-red-400/30 rounded-lg px-3 py-1 hover:bg-red-400/10 transition-all"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-sans text-sm font-semibold text-white truncate">{ach.name}</div>
-                  <div className="font-sans text-xs text-slate-400">{ach.desc}</div>
-                </div>
+              )
+            })}
+            {bills.length === 0 && (
+              <div className="panel-card text-center py-6">
+                <p className="text-slate-500 text-sm font-sans">No monsters yet. Add your first bill below.</p>
               </div>
-            ))}
+            )}
           </div>
-        ) : (
-          <div className="py-3 text-center">
-            <p className="font-sans text-xs text-slate-500">Slay your first bill to earn achievements</p>
+        </div>
+
+        {/* Add Bill Card */}
+        <div className="panel-card">
+          <span className="panel-label block mb-3">Add Bill</span>
+          <form onSubmit={handleAddBill} className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="text"
+                value={billName}
+                onChange={(e) => setBillName(e.target.value)}
+                placeholder="Bill name"
+                className="panel-input px-4 py-3 text-sm col-span-1"
+              />
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm">$</span>
+                <input
+                  type="number"
+                  value={billAmount}
+                  onChange={(e) => setBillAmount(e.target.value)}
+                  placeholder="Amount"
+                  className="panel-input w-full pl-9 pr-4 py-3 text-sm"
+                />
+              </div>
+              <select
+                value={billCategory}
+                onChange={(e) => setBillCategory(e.target.value)}
+                className="panel-input px-4 py-3 text-sm col-span-2"
+              >
+                {BILL_CATEGORIES.map(cat => (
+                  <option key={cat.id} value={cat.id}>{cat.emoji} {cat.label}</option>
+                ))}
+              </select>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-pixel uppercase tracking-wider text-xs py-3.5 rounded-xl transition-all active:scale-[0.98]"
+            >
+              Add Bill
+            </button>
+          </form>
+        </div>
+
+        {/* Stats Row: Hero Rank + Island Stage */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="panel-card">
+            <span className="panel-label block mb-1">Hero Rank</span>
+            <p className="font-sans text-white font-bold text-lg">Lv.{level} {tierName}</p>
           </div>
-        )}
+          <div className="panel-card">
+            <span className="panel-label block mb-1">Island Stage</span>
+            <p className="font-sans text-white font-bold text-lg">{stageName}</p>
+          </div>
+        </div>
+
+        {/* Stats Row: Totals */}
+        <div className="grid grid-cols-3 gap-3">
+          <div className="panel-card text-center">
+            <span className="panel-label block mb-1">Total Bills</span>
+            <p className="font-sans text-white font-bold text-xl">{formatCurrency(totalBills)}</p>
+          </div>
+          <div className="panel-card text-center">
+            <span className="panel-label block mb-1">Surplus</span>
+            <p className={`font-sans font-bold text-xl ${surplus >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+              {formatCurrency(surplus)}
+            </p>
+          </div>
+          <div className="panel-card text-center">
+            <span className="panel-label block mb-1">Months</span>
+            <p className="font-sans text-white font-bold text-xl">{monthsCompleted}</p>
+          </div>
+        </div>
+
       </div>
 
-      {/* Surplus Card */}
-      <div className="neon-card rounded-2xl p-5">
-        {income === 0 && (
-          <p className="font-sans text-sm text-amber-400/80 mb-3">Your treasury is empty, brave soul</p>
-        )}
-        <div className="flex justify-between items-center">
-          <span className="font-pixel text-xs text-amber-300">Surplus</span>
-          <span className={`font-sans text-2xl font-bold ${surplus >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-            {formatCurrency(surplus)}
-          </span>
-        </div>
-        <div className="flex justify-between items-center mt-2">
-          <span className="font-pixel text-xs text-slate-500">Months Survived</span>
-          <span className="font-sans text-base text-slate-300 font-medium">{monthsCompleted}</span>
-        </div>
-      </div>
-
-      {/* Action Button */}
-      <div className="pb-2">
+      {/* Sticky bottom: Trigger Payday */}
+      <div className="px-6 py-4 md:px-8 border-t border-slate-800/50" style={{ background: '#0a1628' }}>
         {allPaid ? (
           <button
             onClick={() => resetMonth()}
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-pixel text-xs py-4 rounded-2xl border border-blue-400/30 shadow-lg shadow-blue-500/25 active:scale-[0.98] transition-all"
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white rounded-xl py-4 transition-all active:scale-[0.98] shadow-lg shadow-blue-500/20"
           >
-            NEW MONTH
+            <span className="font-pixel text-sm block">NEW MONTH</span>
+            <span className="font-sans text-xs text-blue-100/70 block mt-1">Reset bills and continue your journey</span>
           </button>
         ) : (
           <button
             onClick={handlePayday}
             disabled={isBattling}
-            className="payday-btn w-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-pixel text-sm py-4 rounded-2xl border border-amber-400/30 shadow-lg shadow-amber-500/25 disabled:from-slate-700 disabled:to-slate-600 disabled:border-slate-600 disabled:shadow-none active:scale-[0.98] transition-all"
+            className="payday-btn w-full bg-yellow-500 hover:bg-yellow-400 disabled:bg-slate-700 text-slate-900 disabled:text-slate-500 rounded-xl py-4 transition-all active:scale-[0.98] shadow-lg shadow-yellow-500/25 disabled:shadow-none"
           >
-            {isBattling ? 'BATTLING...' : 'TRIGGER PAYDAY'}
+            <span className="font-pixel text-sm block">{isBattling ? 'BATTLING...' : 'TRIGGER PAYDAY'}</span>
+            {!isBattling && (
+              <span className="font-sans text-xs text-slate-800/70 block mt-1">Spawn the hero and slay this month's monsters</span>
+            )}
           </button>
         )}
       </div>

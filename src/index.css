@@ -30,18 +30,25 @@ html, body, #root {
 }
 
 .payday-btn {
-  animation: glow-border 3s ease-in-out infinite;
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.payday-btn:not(:disabled) {
+  animation: glow-yellow 2s ease-in-out infinite;
 }
 
 .payday-btn:hover:not(:disabled) {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .payday-btn:disabled {
   animation: none;
-  opacity: 0.5;
   cursor: not-allowed;
+}
+
+@keyframes glow-yellow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(234, 179, 8, 0.3); }
+  50% { box-shadow: 0 4px 30px rgba(234, 179, 8, 0.5), 0 0 60px rgba(234, 179, 8, 0.15); }
 }
 
 .xp-bar-fill {
@@ -190,4 +197,42 @@ html, body, #root {
 
 .animate-fade-in {
   animation: fade-in 0.4s ease-out;
+}
+
+/* Budget panel card */
+.panel-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(100, 116, 139, 0.25);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+}
+
+/* Budget panel section label */
+.panel-label {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+}
+
+/* Budget panel input */
+.panel-input {
+  background: #1e293b;
+  border: 1px solid rgba(100, 116, 139, 0.4);
+  border-radius: 0.5rem;
+  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: all 0.2s ease;
+}
+
+.panel-input:focus {
+  border-color: rgba(52, 211, 153, 0.5);
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.1);
+  outline: none;
+}
+
+.panel-input::placeholder {
+  color: #475569;
 }
