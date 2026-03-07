@@ -33,17 +33,17 @@ export default function HUD({ sceneData, onOpenAchievements, onCapture }) {
   return (
     <div id="hud-overlay" className="absolute inset-0 pointer-events-none z-20 p-3 md:p-4">
       {/* Top-left: Level + XP */}
-      <div className="absolute top-3 left-3 bg-black/50 rounded-lg px-3 py-2">
+      <div className="absolute top-3 left-3 glass-panel rounded-2xl px-4 py-3">
         <div className="font-pixel text-xs text-amber-400">
           Lv.{level} {tierName}
         </div>
-        <div className="w-32 h-2 bg-slate-700 rounded-full mt-1 overflow-hidden">
+        <div className="w-32 h-2 bg-white/10 rounded-full mt-1.5 overflow-hidden">
           <div
             className="xp-bar-fill h-full rounded-full transition-all duration-700"
             style={{ width: `${xpProgress * 100}%` }}
           />
         </div>
-        <div className="font-sans text-xs text-slate-400 mt-0.5">
+        <div className="font-sans text-xs text-slate-400 mt-1">
           {xp.toLocaleString()} XP
         </div>
       </div>
@@ -52,7 +52,7 @@ export default function HUD({ sceneData, onOpenAchievements, onCapture }) {
       <div className="absolute top-3 right-3" ref={menuRef}>
         <button
           onClick={() => setMenuOpen(v => !v)}
-          className="pointer-events-auto bg-black/50 hover:bg-black/70 rounded-lg w-9 h-9 flex items-center justify-center text-slate-300 hover:text-white transition-colors text-lg"
+          className="pointer-events-auto glass-panel hover:bg-white/15 rounded-2xl w-10 h-10 flex items-center justify-center text-slate-300 hover:text-white transition-all text-lg"
           title="Menu"
         >
           <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
@@ -61,22 +61,22 @@ export default function HUD({ sceneData, onOpenAchievements, onCapture }) {
         </button>
 
         {menuOpen && (
-          <div className="pointer-events-auto absolute top-11 right-0 bg-slate-900 border border-slate-700 rounded-xl shadow-xl shadow-black/40 overflow-hidden w-44">
+          <div className="pointer-events-auto absolute top-12 right-0 glass-panel rounded-2xl shadow-xl shadow-black/30 overflow-hidden w-48 border border-white/10">
             <button
               onClick={() => { setMenuOpen(false); onOpenAchievements() }}
-              className="w-full text-left px-4 py-2.5 text-sm font-sans text-slate-200 hover:bg-slate-800 flex items-center gap-2 transition-colors"
+              className="w-full text-left px-4 py-3 text-sm font-sans text-slate-200 hover:bg-white/10 flex items-center gap-2.5 transition-colors"
             >
               <span>🏆</span> Achievements
             </button>
             <button
               onClick={() => { setMenuOpen(false); onCapture() }}
-              className="w-full text-left px-4 py-2.5 text-sm font-sans text-slate-200 hover:bg-slate-800 flex items-center gap-2 transition-colors"
+              className="w-full text-left px-4 py-3 text-sm font-sans text-slate-200 hover:bg-white/10 flex items-center gap-2.5 transition-colors"
             >
               <span>📸</span> Capture
             </button>
             <button
               onClick={toggleMute}
-              className="w-full text-left px-4 py-2.5 text-sm font-sans text-slate-200 hover:bg-slate-800 flex items-center gap-2 transition-colors"
+              className="w-full text-left px-4 py-3 text-sm font-sans text-slate-200 hover:bg-white/10 flex items-center gap-2.5 transition-colors"
             >
               <span>{soundMuted ? '🔇' : '🔊'}</span> {soundMuted ? 'Unmute' : 'Mute'}
             </button>
@@ -85,21 +85,21 @@ export default function HUD({ sceneData, onOpenAchievements, onCapture }) {
       </div>
 
       {/* Bottom-left: Stage */}
-      <div className="absolute bottom-3 left-3 bg-black/50 rounded-lg px-3 py-2">
+      <div className="absolute bottom-3 left-3 glass-panel rounded-2xl px-4 py-3">
         <div className="font-pixel text-xs text-slate-300">
           {stageName}
         </div>
-        <div className="font-sans text-xs text-slate-400">
+        <div className="font-sans text-xs text-slate-400 mt-0.5">
           Month #{monthsCompleted}
         </div>
       </div>
 
       {/* Bottom-right: Bills slain */}
-      <div className="absolute bottom-3 right-3 bg-black/50 rounded-lg px-3 py-2">
+      <div className="absolute bottom-3 right-3 glass-panel rounded-2xl px-4 py-3">
         <div className="font-sans text-xs text-slate-400">
           Bills Slain
         </div>
-        <div className="font-pixel text-sm text-amber-400">
+        <div className="font-pixel text-sm text-amber-400 mt-0.5">
           {totalBillsSlain}
         </div>
       </div>

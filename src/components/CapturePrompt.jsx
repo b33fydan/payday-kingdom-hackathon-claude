@@ -35,7 +35,7 @@ export default function CapturePrompt({ visible, onCapture, onDismiss }) {
           setShow(false)
           onCapture()
         }}
-        className="bg-slate-900/90 border border-slate-600 hover:border-amber-400 rounded-xl px-4 py-2 font-sans text-xs text-slate-300 hover:text-amber-400 transition-colors shadow-lg flex items-center gap-2"
+        className="glass-panel border border-white/15 hover:border-amber-400/50 rounded-2xl px-5 py-2.5 font-sans text-xs text-slate-300 hover:text-amber-400 transition-all shadow-xl shadow-black/30 flex items-center gap-2"
       >
         <span>📸</span>
         <span>Capture this victory?</span>

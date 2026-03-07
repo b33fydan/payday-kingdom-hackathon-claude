@@ -81,11 +81,11 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={onClose}>
       <div
-        className="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full overflow-hidden flex flex-col"
+        className="glass-panel border border-white/10 rounded-3xl max-w-lg w-full overflow-hidden flex flex-col shadow-2xl shadow-black/50"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-800">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
           <h2 className="font-pixel text-xs text-amber-400">Capture Kingdom</h2>
           <button
             onClick={onClose}
@@ -96,7 +96,7 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
         </div>
 
         {/* Preview */}
-        <div className="p-4 flex justify-center bg-slate-950">
+        <div className="p-5 flex justify-center bg-black/30">
           {activeUrl ? (
             <img
               src={activeUrl}
@@ -111,7 +111,7 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
         </div>
 
         {/* Story mode toggle */}
-        <div className="px-5 py-2 border-t border-slate-800 flex items-center gap-3">
+        <div className="px-6 py-3 border-t border-white/10 flex items-center gap-3">
           <button
             onClick={handleStoryToggle}
             disabled={generating}
@@ -129,19 +129,19 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
         </div>
 
         {/* Action buttons */}
-        <div className="px-5 py-4 border-t border-slate-800 flex gap-3">
+        <div className="px-6 py-5 border-t border-white/10 flex gap-3">
           {isMobile && canShare ? (
             // Mobile: Share as primary action
             <>
               <button
                 onClick={handleShare}
-                className="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-900 font-sans text-sm font-bold py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2"
+                className="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-900 font-sans text-sm font-bold py-2.5 rounded-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-2"
               >
                 Share
               </button>
               <button
                 onClick={handleDownload}
-                className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-sans text-sm py-2.5 px-4 rounded-xl transition-colors"
+                className="bg-white/10 hover:bg-white/15 text-slate-300 font-sans text-sm py-2.5 px-4 rounded-2xl transition-all active:scale-[0.98] border border-white/10"
               >
                 Save
               </button>
@@ -151,20 +151,20 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
             <>
               <button
                 onClick={handleDownload}
-                className="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-900 font-sans text-sm font-bold py-2.5 rounded-xl transition-colors"
+                className="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-900 font-sans text-sm font-bold py-2.5 rounded-2xl transition-all active:scale-[0.98]"
               >
                 Download
               </button>
               <button
                 onClick={handleCopy}
-                className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-sans text-sm py-2.5 px-4 rounded-xl transition-colors min-w-20"
+                className="bg-white/10 hover:bg-white/15 text-slate-300 font-sans text-sm py-2.5 px-4 rounded-2xl transition-all active:scale-[0.98] min-w-20 border border-white/10"
               >
                 {copied ? 'Copied!' : 'Copy'}
               </button>
               {canShare && (
                 <button
                   onClick={handleShare}
-                  className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-sans text-sm py-2.5 px-4 rounded-xl transition-colors"
+                  className="bg-white/10 hover:bg-white/15 text-slate-300 font-sans text-sm py-2.5 px-4 rounded-2xl transition-all active:scale-[0.98] border border-white/10"
                 >
                   Share
                 </button>

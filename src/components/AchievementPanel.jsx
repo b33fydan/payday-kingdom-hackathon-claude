@@ -43,11 +43,11 @@ export default function AchievementPanel({ onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={onClose}>
       <div
-        className="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full max-h-[80vh] overflow-hidden flex flex-col"
+        className="glass-panel border border-white/10 rounded-3xl max-w-lg w-full max-h-[80vh] overflow-hidden flex flex-col shadow-2xl shadow-black/50"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
           <div>
             <h2 className="font-pixel text-sm text-amber-400">Achievements</h2>
             <p className="font-sans text-xs text-slate-500 mt-1">
@@ -63,7 +63,7 @@ export default function AchievementPanel({ onClose }) {
         </div>
 
         {/* Achievement list */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-2">
+        <div className="flex-1 overflow-y-auto p-5 space-y-2">
           {ACHIEVEMENT_DEFS.map(ach => {
             const unlocked = !!achievements[ach.id]
             const unlockedDate = unlocked
@@ -73,10 +73,10 @@ export default function AchievementPanel({ onClose }) {
             return (
               <div
                 key={ach.id}
-                className={`flex items-center gap-3 rounded-xl px-4 py-3 transition-colors ${
+                className={`flex items-center gap-3 rounded-2xl px-4 py-3 transition-all border ${
                   unlocked
-                    ? 'bg-slate-800'
-                    : 'bg-slate-800/40 opacity-50'
+                    ? 'bg-white/5 border-white/10'
+                    : 'bg-white/[0.02] border-transparent opacity-50'
                 }`}
               >
                 {/* Icon */}
