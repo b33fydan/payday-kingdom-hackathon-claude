@@ -3,6 +3,7 @@ import Scene from './components/Scene'
 import BudgetPanel from './components/BudgetPanel'
 import HUD from './components/HUD'
 import Onboarding from './components/Onboarding'
+import LandingPage from './components/LandingPage'
 import AchievementToast from './components/AchievementToast'
 import AchievementPanel from './components/AchievementPanel'
 import ShareModal from './components/ShareModal'
@@ -14,6 +15,8 @@ import { playAchievement, playIslandGrow, initAudio } from './lib/soundManager'
 
 export default function App() {
   const hasOnboarded = useGameStore(s => s.hasOnboarded)
+  const [showLanding, setShowLanding] = useState(!hasOnboarded)
+  const [showOnboarding, setShowOnboarding] = useState(false)
   const [sceneData, setSceneData] = useState(null)
   const [showAchievements, setShowAchievements] = useState(false)
   const [toastQueue, setToastQueue] = useState([])
@@ -78,10 +81,30 @@ export default function App() {
     return () => document.removeEventListener('click', handler)
   }, [])
 
+  // Handle landing → onboarding transition
+  const handleStartFromLanding = useCallback(() => {
+    setShowLanding(false)
+    setShowOnboarding(true)
+    initAudio()
+  }, [])
+
+  // Sync hasOnboarded changes (when onboarding completes, hide it)
+  useEffect(() => {
+    if (hasOnboarded) {
+      setShowOnboarding(false)
+      setShowLanding(false)
+    }
+  }, [hasOnboarded])
+
   return (
     <div className="w-screen h-screen flex flex-col md:flex-row bg-slate-900">
+      {/* Landing page — shown before onboarding */}
+      {showLanding && !hasOnboarded && (
+        <LandingPage onStart={handleStartFromLanding} />
+      )}
+
       {/* Onboarding overlay */}
-      {!hasOnboarded && <Onboarding />}
+      {showOnboarding && !hasOnboarded && <Onboarding />}
 
       {/* Achievement panel modal */}
       {showAchievements && (
