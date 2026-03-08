@@ -59,15 +59,9 @@ export default function BudgetPanel({ onOpenSettings }) {
       <div className="flex-1 overflow-y-auto px-6 py-6 md:px-8 md:py-7 space-y-4">
 
         {/* Header */}
-        <div>
-          <div className="flex items-start justify-between">
-            <div>
-              <p className="font-pixel text-emerald-400 uppercase tracking-widest" style={{ fontSize: '0.6rem' }}>
-                Your Kingdom Treasury
-              </p>
-              <p className="font-sans text-slate-500 uppercase text-xs tracking-wider mt-0.5">Payday Kingdom</p>
-            </div>
-            {onOpenSettings && (
+        <div className="text-center pt-2 pb-1">
+          {onOpenSettings && (
+            <div className="flex justify-end mb-2">
               <button
                 onClick={onOpenSettings}
                 className="text-slate-500 hover:text-slate-300 transition-colors p-1"
@@ -77,30 +71,34 @@ export default function BudgetPanel({ onOpenSettings }) {
                   <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.062 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
                 </svg>
               </button>
-            )}
-          </div>
-          <h1 className="font-sans text-white font-bold text-2xl mt-2">
+            </div>
+          )}
+          <p className="font-pixel text-emerald-400/70 uppercase tracking-widest text-shadow-label" style={{ fontSize: '0.55rem' }}>
+            Payday Kingdom
+          </p>
+          <h1 className="font-pixel text-white text-xl mt-2 text-shadow-heading" style={{ lineHeight: '1.6' }}>
             {kingdomName || 'My Kingdom'}
           </h1>
-          <p className="font-sans text-slate-400 text-sm italic mt-1 leading-relaxed">
+          <p className="font-sans text-slate-500 text-xs italic mt-2 leading-relaxed">
             Income feeds the treasury, bills become monsters, and each payday advances {kingdomName || 'your kingdom'} into a richer month.
           </p>
+          <div className="divider-glow mt-4" />
         </div>
 
         {/* Monthly Income Card */}
         <div className="panel-card">
           <div className="flex items-center justify-between mb-3">
-            <span className="panel-label">Monthly Income</span>
+            <span className="panel-label text-shadow-label">Monthly Income</span>
             <span className="font-sans text-xs text-slate-500">{currentMonth}</span>
           </div>
-          <div className="relative">
-            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-sans text-lg font-medium">$</span>
+          <div className="flex">
+            <span className="currency-badge text-lg">$</span>
             <input
               type="number"
               value={income || ''}
               onChange={(e) => setIncome(e.target.value)}
               placeholder="0"
-              className="panel-input w-full pl-11 pr-5 py-4 text-lg font-medium"
+              className="panel-input w-full px-4 py-4 text-lg font-medium rounded-l-none"
             />
           </div>
         </div>
@@ -108,7 +106,7 @@ export default function BudgetPanel({ onOpenSettings }) {
         {/* Bills Section */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <span className="panel-label">Bills (Monsters to Slay)</span>
+            <span className="panel-label text-shadow-label">Bills (Monsters to Slay)</span>
             <span className="font-sans text-xs text-slate-500">{activeBills} active</span>
           </div>
 
@@ -158,7 +156,7 @@ export default function BudgetPanel({ onOpenSettings }) {
 
         {/* Add Bill Card */}
         <div className="panel-card">
-          <span className="panel-label block mb-3">Add Bill</span>
+          <span className="panel-label text-shadow-label block mb-3">Add Bill</span>
           <form onSubmit={handleAddBill} className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <input
@@ -168,14 +166,14 @@ export default function BudgetPanel({ onOpenSettings }) {
                 placeholder="Bill name"
                 className="panel-input px-4 py-3 text-sm col-span-1"
               />
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm">$</span>
+              <div className="flex">
+                <span className="currency-badge text-sm">$</span>
                 <input
                   type="number"
                   value={billAmount}
                   onChange={(e) => setBillAmount(e.target.value)}
                   placeholder="Amount"
-                  className="panel-input w-full pl-9 pr-4 py-3 text-sm"
+                  className="panel-input w-full px-3 py-3 text-sm rounded-l-none"
                 />
               </div>
               <select
@@ -190,7 +188,7 @@ export default function BudgetPanel({ onOpenSettings }) {
             </div>
             <button
               type="submit"
-              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-pixel uppercase tracking-wider text-xs py-3.5 rounded-xl transition-all active:scale-[0.98]"
+              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-pixel uppercase tracking-wider text-xs py-3.5 rounded-xl transition-all active:scale-[0.98] text-shadow-label"
             >
               Add Bill
             </button>
@@ -200,30 +198,30 @@ export default function BudgetPanel({ onOpenSettings }) {
         {/* Stats Row: Hero Rank + Island Stage */}
         <div className="grid grid-cols-2 gap-3">
           <div className="panel-card">
-            <span className="panel-label block mb-1">Hero Rank</span>
-            <p className="font-sans text-white font-bold text-lg">Lv.{level} {tierName}</p>
+            <span className="panel-label text-shadow-label block mb-1">Hero Rank</span>
+            <p className="font-sans text-white font-bold text-lg text-shadow-label">Lv.{level} {tierName}</p>
           </div>
           <div className="panel-card">
-            <span className="panel-label block mb-1">Island Stage</span>
-            <p className="font-sans text-white font-bold text-lg">{stageName}</p>
+            <span className="panel-label text-shadow-label block mb-1">Island Stage</span>
+            <p className="font-sans text-white font-bold text-lg text-shadow-label">{stageName}</p>
           </div>
         </div>
 
         {/* Stats Row: Totals */}
         <div className="grid grid-cols-3 gap-3">
           <div className="panel-card text-center">
-            <span className="panel-label block mb-1">Total Bills</span>
-            <p className="font-sans text-white font-bold text-xl">{formatCurrency(totalBills)}</p>
+            <span className="panel-label text-shadow-label block mb-1">Total Bills</span>
+            <p className="font-sans text-white font-bold text-xl text-shadow-label">{formatCurrency(totalBills)}</p>
           </div>
           <div className="panel-card text-center">
-            <span className="panel-label block mb-1">Surplus</span>
-            <p className={`font-sans font-bold text-xl ${surplus >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+            <span className="panel-label text-shadow-label block mb-1">Surplus</span>
+            <p className={`font-sans font-bold text-xl text-shadow-label ${surplus >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
               {formatCurrency(surplus)}
             </p>
           </div>
           <div className="panel-card text-center">
-            <span className="panel-label block mb-1">Months</span>
-            <p className="font-sans text-white font-bold text-xl">{monthsCompleted}</p>
+            <span className="panel-label text-shadow-label block mb-1">Months</span>
+            <p className="font-sans text-white font-bold text-xl text-shadow-label">{monthsCompleted}</p>
           </div>
         </div>
 
@@ -236,7 +234,7 @@ export default function BudgetPanel({ onOpenSettings }) {
             onClick={() => resetMonth()}
             className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white rounded-xl py-4 transition-all active:scale-[0.98] shadow-lg shadow-blue-500/20"
           >
-            <span className="font-pixel text-sm block">NEW MONTH</span>
+            <span className="font-pixel text-sm block text-shadow-heading">NEW MONTH</span>
             <span className="font-sans text-xs text-blue-100/70 block mt-1">Reset bills and continue your journey</span>
           </button>
         ) : (
@@ -245,7 +243,7 @@ export default function BudgetPanel({ onOpenSettings }) {
             disabled={isBattling}
             className="payday-btn w-full bg-yellow-500 hover:bg-yellow-400 disabled:bg-slate-700 text-slate-900 disabled:text-slate-500 rounded-xl py-4 transition-all active:scale-[0.98] shadow-lg shadow-yellow-500/25 disabled:shadow-none"
           >
-            <span className="font-pixel text-sm block">{isBattling ? 'BATTLING...' : 'TRIGGER PAYDAY'}</span>
+            <span className="font-pixel text-sm block text-shadow-heading">{isBattling ? 'BATTLING...' : 'TRIGGER PAYDAY'}</span>
             {!isBattling && (
               <span className="font-sans text-xs text-slate-800/70 block mt-1">Spawn the hero and slay this month's monsters</span>
             )}

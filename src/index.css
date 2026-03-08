@@ -236,3 +236,29 @@ html, body, #root {
 .panel-input::placeholder {
   color: #475569;
 }
+
+/* Text shadow — voxel block depth effect */
+.text-shadow-heading {
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+.text-shadow-label {
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+/* Currency input group badge */
+.currency-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  background: #0f172a;
+  border: 1px solid rgba(100, 116, 139, 0.4);
+  border-right: none;
+  border-radius: 0.5rem 0 0 0.5rem;
+  color: #94a3b8;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  user-select: none;
+  flex-shrink: 0;
+}

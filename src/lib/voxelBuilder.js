@@ -15,7 +15,7 @@ export function createVoxel(x, y, z, color, size = 1) {
 // Tree variations
 export function createTree(x, z, style = 'oak') {
   const group = new THREE.Group()
-  group.position.set(x, 0, z)
+  group.position.set(x, -0.25, z)
 
   const trunkColor = 0x92400e
   const leafColors = [0x15803d, 0x166534, 0x14532d]

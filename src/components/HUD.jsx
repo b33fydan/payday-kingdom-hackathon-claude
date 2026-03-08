@@ -34,7 +34,7 @@ export default function HUD({ sceneData, onOpenAchievements, onCapture }) {
     <div id="hud-overlay" className="absolute inset-0 pointer-events-none z-20 p-3 md:p-4">
       {/* Top-left: Level + XP */}
       <div className="absolute top-3 left-3 glass-panel rounded-2xl px-4 py-3">
-        <div className="font-pixel text-xs text-amber-400">
+        <div className="font-pixel text-xs text-amber-400 text-shadow-heading">
           Lv.{level} {tierName}
         </div>
         <div className="w-32 h-2 bg-white/10 rounded-full mt-1.5 overflow-hidden">
@@ -43,7 +43,7 @@ export default function HUD({ sceneData, onOpenAchievements, onCapture }) {
             style={{ width: `${xpProgress * 100}%` }}
           />
         </div>
-        <div className="font-sans text-xs text-slate-400 mt-1">
+        <div className="font-sans text-xs text-slate-400 mt-1 text-shadow-label">
           {xp.toLocaleString()} XP
         </div>
       </div>
@@ -86,20 +86,20 @@ export default function HUD({ sceneData, onOpenAchievements, onCapture }) {
 
       {/* Bottom-left: Stage */}
       <div className="absolute bottom-3 left-3 glass-panel rounded-2xl px-4 py-3">
-        <div className="font-pixel text-xs text-slate-300">
+        <div className="font-pixel text-xs text-slate-300 text-shadow-heading">
           {stageName}
         </div>
-        <div className="font-sans text-xs text-slate-400 mt-0.5">
+        <div className="font-sans text-xs text-slate-400 mt-0.5 text-shadow-label">
           Month #{monthsCompleted}
         </div>
       </div>
 
       {/* Bottom-right: Bills slain */}
       <div className="absolute bottom-3 right-3 glass-panel rounded-2xl px-4 py-3">
-        <div className="font-sans text-xs text-slate-400">
+        <div className="font-sans text-xs text-slate-400 text-shadow-label">
           Bills Slain
         </div>
-        <div className="font-pixel text-sm text-amber-400 mt-0.5">
+        <div className="font-pixel text-sm text-amber-400 mt-0.5 text-shadow-heading">
           {totalBillsSlain}
         </div>
       </div>

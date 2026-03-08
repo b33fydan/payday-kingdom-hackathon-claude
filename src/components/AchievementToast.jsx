@@ -60,8 +60,8 @@ export default function AchievementToast({ queue, onDone }) {
       <div className="bg-slate-900 border-2 border-amber-400 rounded-xl px-5 py-3 flex items-center gap-3 shadow-lg shadow-amber-400/20">
         <span className="text-3xl">{current.icon}</span>
         <div>
-          <div className="font-pixel text-xs text-amber-400">Achievement Unlocked!</div>
-          <div className="font-sans text-sm text-white font-bold mt-0.5">{current.name}</div>
+          <div className="font-pixel text-xs text-amber-400 text-shadow-heading">Achievement Unlocked!</div>
+          <div className="font-sans text-sm text-white font-bold mt-0.5 text-shadow-label">{current.name}</div>
         </div>
       </div>
     </div>

@@ -54,7 +54,7 @@ export default function Onboarding() {
         {step === 0 && (
           <div className="onboard-card rounded-3xl p-8 md:p-10 text-center space-y-6 animate-fade-in">
             <div className="text-6xl mb-2">⚔️</div>
-            <h1 className="font-pixel text-base md:text-lg text-amber-400 leading-relaxed">Welcome, brave soul.</h1>
+            <h1 className="font-pixel text-base md:text-lg text-amber-400 leading-relaxed text-shadow-heading">Welcome, brave soul.</h1>
             <p className="font-sans text-slate-300 text-sm leading-relaxed px-2">
               Your financial discipline builds a thriving world.
               Every bill is a monster. Every payday is a battle.
@@ -74,7 +74,7 @@ export default function Onboarding() {
           <div className="onboard-card rounded-3xl p-8 md:p-10 space-y-6 animate-fade-in">
             <div className="text-center">
               <div className="text-5xl mb-3">🏰</div>
-              <h2 className="font-pixel text-sm text-amber-400 leading-relaxed">Name Your Kingdom</h2>
+              <h2 className="font-pixel text-sm text-amber-400 leading-relaxed text-shadow-heading">Name Your Kingdom</h2>
             </div>
             <input
               type="text"
@@ -85,7 +85,7 @@ export default function Onboarding() {
               autoFocus
             />
             <div>
-              <label className="font-pixel text-xs text-slate-400 block mb-3">Banner Color</label>
+              <label className="font-pixel text-xs text-slate-400 block mb-3 text-shadow-label">Banner Color</label>
               <div className="flex gap-3 justify-center">
                 {BANNER_COLORS.map(c => (
                   <button
@@ -111,16 +111,16 @@ export default function Onboarding() {
           <div className="onboard-card rounded-3xl p-8 md:p-10 space-y-6 animate-fade-in">
             <div className="text-center px-2">
               <div className="text-5xl mb-3">💰</div>
-              <h2 className="font-pixel text-sm text-amber-400 leading-relaxed">How much treasure arrives each month?</h2>
+              <h2 className="font-pixel text-sm text-amber-400 leading-relaxed text-shadow-heading">How much treasure arrives each month?</h2>
             </div>
-            <div className="relative">
-              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-lg">$</span>
+            <div className="flex">
+              <span className="currency-badge text-lg rounded-l-2xl">$</span>
               <input
                 type="number"
                 value={income}
                 onChange={(e) => setIncomeLocal(e.target.value)}
                 placeholder="5000"
-                className="input-polished w-full rounded-2xl pl-10 pr-5 py-4 text-white text-lg font-sans"
+                className="input-polished w-full rounded-r-2xl rounded-l-none px-5 py-4 text-white text-lg font-sans border-l-0"
                 autoFocus
               />
             </div>
@@ -138,7 +138,7 @@ export default function Onboarding() {
           <div className="onboard-card rounded-3xl p-8 md:p-10 space-y-5 animate-fade-in">
             <div className="text-center px-2">
               <div className="text-5xl mb-3">👹</div>
-              <h2 className="font-pixel text-sm text-amber-400 mb-2 leading-relaxed">What monsters threaten your realm?</h2>
+              <h2 className="font-pixel text-sm text-amber-400 mb-2 leading-relaxed text-shadow-heading">What monsters threaten your realm?</h2>
               <p className="font-sans text-xs text-slate-500">Add at least one bill</p>
             </div>
             <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
@@ -160,14 +160,14 @@ export default function Onboarding() {
                     placeholder="Bill name"
                     className="input-polished flex-1 rounded-xl px-4 py-3 text-sm text-white font-sans"
                   />
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">$</span>
+                  <div className="flex">
+                    <span className="currency-badge text-xs rounded-l-xl" style={{ padding: '0 0.4rem' }}>$</span>
                     <input
                       type="number"
                       value={bill.amount}
                       onChange={(e) => updateBill(i, 'amount', e.target.value)}
                       placeholder="0"
-                      className="input-polished w-24 rounded-xl pl-7 pr-3 py-3 text-sm text-white font-sans"
+                      className="input-polished w-20 rounded-r-xl rounded-l-none border-l-0 px-2 py-3 text-sm text-white font-sans"
                     />
                   </div>
                   {bills.length > 1 && (
