@@ -58,48 +58,30 @@ export default function BudgetPanel({ onOpenSettings }) {
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-6 py-6 md:px-8 md:py-7 space-y-5">
 
-        {/* Title Block — The Crown */}
-        <div className="text-center pt-6 pb-4 px-4">
-          {onOpenSettings && (
-            <div className="flex justify-end -mt-4 mb-3">
+        {/* Title Block — left-aligned, commanding */}
+        <div className="pt-4 pb-2">
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="font-pixel text-emerald-400 uppercase tracking-widest text-shadow-label" style={{ fontSize: '0.6rem' }}>
+                Your Kingdom Treasury
+              </p>
+              <p className="font-sans text-slate-500 uppercase text-xs tracking-wider mt-1">Payday Kingdom</p>
+            </div>
+            {onOpenSettings && (
               <button
                 onClick={onOpenSettings}
-                className="text-slate-500 hover:text-slate-300 transition-colors p-1"
-                title="Settings"
+                className="font-pixel text-xs text-slate-400 border border-slate-600 rounded-lg px-4 py-2 hover:text-white hover:border-slate-400 transition-all text-shadow-label"
               >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.062 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-                </svg>
+                Settings
               </button>
-            </div>
-          )}
-          <p className="font-pixel text-emerald-400/60 uppercase tracking-widest text-shadow-label" style={{ fontSize: '0.5rem' }}>
-            Your Kingdom Treasury
-          </p>
-          <p className="font-pixel text-emerald-400 uppercase tracking-widest mt-1.5 text-shadow-label" style={{ fontSize: '0.65rem' }}>
-            Payday Kingdom
-          </p>
-          <h1 className="font-pixel text-white mt-4 text-shadow-title leading-relaxed text-3xl md:text-4xl" style={{ lineHeight: '1.8' }}>
+            )}
+          </div>
+          <h1 className="font-pixel text-white mt-5 text-shadow-title text-4xl md:text-5xl" style={{ lineHeight: '1.4' }}>
             {kingdomName || 'My Kingdom'}
           </h1>
-          {/* Badge row: level + stage + month */}
-          <div className="flex items-center justify-center gap-2 mt-4 flex-wrap">
-            <span className="font-sans text-xs text-amber-400/90 bg-amber-400/10 px-3 py-1 rounded-full text-shadow-label">
-              Lv.{level} {tierName}
-            </span>
-            <span className="text-slate-600 text-xs">·</span>
-            <span className="font-sans text-xs text-slate-300/80 bg-white/5 px-3 py-1 rounded-full text-shadow-label">
-              {stageName}
-            </span>
-            <span className="text-slate-600 text-xs">·</span>
-            <span className="font-sans text-xs text-slate-400/80 bg-white/5 px-3 py-1 rounded-full text-shadow-label">
-              Month #{monthsCompleted}
-            </span>
-          </div>
-          <p className="font-sans text-slate-500 text-xs italic mt-4 leading-relaxed max-w-xs mx-auto">
+          <p className="font-sans text-slate-400 text-sm mt-4 leading-relaxed">
             Income feeds the treasury, bills become monsters, and each payday advances {kingdomName || 'your kingdom'} into a richer month.
           </p>
-          <div className="divider-glow mt-5" />
         </div>
 
         {/* Monthly Income Card */}
@@ -124,41 +106,39 @@ export default function BudgetPanel({ onOpenSettings }) {
         <div>
           <div className="flex items-center justify-between mb-4">
             <span className="panel-label text-shadow-label" style={{ fontSize: '0.75rem' }}>Bills (Monsters to Slay)</span>
-            <span className="font-sans text-xs text-slate-500">{activeBills} active</span>
+            <span className="font-sans text-xs text-slate-500 uppercase tracking-wider">{activeBills} active</span>
           </div>
 
-          {/* Existing bills as individual cards */}
+          {/* Existing bills */}
           <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
             {bills.map(bill => {
               const cat = BILL_CATEGORIES.find(c => c.id === bill.category)
               return (
-                <div key={bill.id} className={`panel-card ${bill.isPaid ? 'opacity-50' : ''}`} style={{ padding: '1.1rem 1.25rem' }}>
-                  <div className="flex items-start gap-3">
-                    <div className={`w-11 h-11 rounded-xl ${CATEGORY_BG[bill.category] || 'bg-gray-900/30'} flex items-center justify-center shrink-0 mt-0.5`}>
+                <div key={bill.id} className={`panel-card ${bill.isPaid ? 'opacity-50' : ''}`} style={{ padding: '1rem 1.25rem' }}>
+                  <div className="flex items-center gap-3">
+                    <div className={`w-11 h-11 rounded-xl ${CATEGORY_BG[bill.category] || 'bg-gray-900/30'} flex items-center justify-center shrink-0`}>
                       <span className="text-xl">{cat?.emoji || '📋'}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="font-sans text-lg font-bold text-white truncate text-shadow-label">{bill.name}</span>
-                        <span className="font-sans text-xl text-white font-bold shrink-0 text-shadow-label">{formatCurrency(bill.amount)}</span>
-                      </div>
-                      <div className="flex items-center justify-between mt-1.5">
-                        <span className="font-sans text-xs text-slate-500">{cat?.label || 'Other'}</span>
-                        <span className="font-sans text-xs text-slate-500 uppercase tracking-wider">{bill.category}</span>
-                      </div>
+                      <span className="font-sans text-lg font-bold text-white block truncate text-shadow-label">{bill.name}</span>
+                      <span className="font-sans text-xs text-slate-500">{cat?.label || 'Other'}</span>
                     </div>
-                  </div>
-                  <div className="flex justify-end mt-3">
-                    {bill.isPaid ? (
-                      <span className="font-sans text-xs font-bold text-emerald-400 tracking-wider uppercase">Slain</span>
-                    ) : (
-                      <button
-                        onClick={() => { removeBill(bill.id); playBillRemove() }}
-                        className="font-sans text-xs text-red-400 uppercase tracking-wider border border-red-400/30 rounded-lg px-4 py-1.5 hover:bg-red-400/10 transition-all"
-                      >
-                        Remove
-                      </button>
-                    )}
+                    <div className="text-right shrink-0">
+                      <span className="font-sans text-xl text-white font-bold block text-shadow-label">{formatCurrency(bill.amount)}</span>
+                      <span className="font-sans text-xs text-slate-500 uppercase tracking-wider">{bill.category}</span>
+                    </div>
+                    <div className="shrink-0 ml-2">
+                      {bill.isPaid ? (
+                        <span className="font-pixel text-xs text-emerald-400 tracking-wider uppercase text-shadow-label">Slain</span>
+                      ) : (
+                        <button
+                          onClick={() => { removeBill(bill.id); playBillRemove() }}
+                          className="font-pixel text-xs text-slate-400 uppercase border border-slate-600 rounded-lg px-3 py-2 hover:text-red-400 hover:border-red-400/50 transition-all text-shadow-label"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               )
@@ -181,18 +161,15 @@ export default function BudgetPanel({ onOpenSettings }) {
                 value={billName}
                 onChange={(e) => setBillName(e.target.value)}
                 placeholder="Bill name"
-                className="panel-input px-4 py-3.5 text-base col-span-1"
+                className="panel-input px-4 py-3.5 text-base"
               />
-              <div className="flex">
-                <span className="currency-badge text-base">$</span>
-                <input
-                  type="number"
-                  value={billAmount}
-                  onChange={(e) => setBillAmount(e.target.value)}
-                  placeholder="Amount"
-                  className="panel-input w-full px-4 py-3.5 text-base rounded-l-none"
-                />
-              </div>
+              <input
+                type="number"
+                value={billAmount}
+                onChange={(e) => setBillAmount(e.target.value)}
+                placeholder="Amount"
+                className="panel-input px-4 py-3.5 text-base"
+              />
               <select
                 value={billCategory}
                 onChange={(e) => setBillCategory(e.target.value)}
@@ -212,21 +189,33 @@ export default function BudgetPanel({ onOpenSettings }) {
           </form>
         </div>
 
+        {/* Hero Rank + Island Stage */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="panel-card" style={{ padding: '1.25rem 1.5rem' }}>
+            <span className="panel-label text-shadow-label block mb-2" style={{ fontSize: '0.7rem' }}>Hero Rank</span>
+            <p className="font-sans text-white font-bold text-xl text-shadow-label">Lv.{level} {tierName}</p>
+          </div>
+          <div className="panel-card" style={{ padding: '1.25rem 1.5rem' }}>
+            <span className="panel-label text-shadow-label block mb-2" style={{ fontSize: '0.7rem' }}>Island Stage</span>
+            <p className="font-sans text-white font-bold text-xl text-shadow-label">{stageName}</p>
+          </div>
+        </div>
+
         {/* Stats Row: Totals */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="panel-card text-center" style={{ padding: '1.25rem 0.75rem' }}>
-            <span className="panel-label text-shadow-label block mb-2" style={{ fontSize: '0.65rem' }}>Total Bills</span>
+          <div className="panel-card" style={{ padding: '1.25rem 0.75rem' }}>
+            <span className="panel-label text-shadow-label block mb-2" style={{ fontSize: '0.6rem' }}>Total Bills</span>
             <p className="font-sans text-white font-bold text-2xl text-shadow-label">{formatCurrency(totalBills)}</p>
           </div>
-          <div className="panel-card text-center" style={{ padding: '1.25rem 0.75rem' }}>
-            <span className="panel-label text-shadow-label block mb-2" style={{ fontSize: '0.65rem' }}>Surplus</span>
+          <div className="panel-card" style={{ padding: '1.25rem 0.75rem' }}>
+            <span className="panel-label text-shadow-label block mb-2" style={{ fontSize: '0.6rem' }}>Surplus</span>
             <p className={`font-sans font-bold text-2xl text-shadow-label ${surplus >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
               {formatCurrency(surplus)}
             </p>
           </div>
-          <div className="panel-card text-center" style={{ padding: '1.25rem 0.75rem' }}>
-            <span className="panel-label text-shadow-label block mb-2" style={{ fontSize: '0.65rem' }}>Bills Slain</span>
-            <p className="font-sans text-amber-400 font-bold text-2xl text-shadow-label">{totalBillsSlain}</p>
+          <div className="panel-card" style={{ padding: '1.25rem 0.75rem' }}>
+            <span className="panel-label text-shadow-label block mb-2" style={{ fontSize: '0.6rem' }}>Months Survived</span>
+            <p className="font-sans text-white font-bold text-2xl text-shadow-label">{monthsCompleted}</p>
           </div>
         </div>
 
@@ -239,8 +228,8 @@ export default function BudgetPanel({ onOpenSettings }) {
             onClick={() => resetMonth()}
             className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white rounded-2xl py-5 transition-all active:scale-[0.98] shadow-lg shadow-blue-500/20"
           >
-            <span className="font-pixel text-base block text-shadow-heading">NEW MONTH</span>
-            <span className="font-sans text-sm text-blue-100/70 block mt-1.5">Reset bills and continue your journey</span>
+            <span className="font-pixel text-sm block text-shadow-heading">NEW MONTH</span>
+            <span className="font-sans text-xs text-blue-100/70 block mt-1.5">Reset bills and continue your journey</span>
           </button>
         ) : (
           <button
@@ -248,9 +237,9 @@ export default function BudgetPanel({ onOpenSettings }) {
             disabled={isBattling}
             className="payday-btn w-full bg-yellow-500 hover:bg-yellow-400 disabled:bg-slate-700 text-slate-900 disabled:text-slate-500 rounded-2xl py-5 transition-all active:scale-[0.98] shadow-lg shadow-yellow-500/25 disabled:shadow-none"
           >
-            <span className="font-pixel text-base block text-shadow-heading">{isBattling ? 'BATTLING...' : 'TRIGGER PAYDAY'}</span>
+            <span className="font-pixel text-sm block text-shadow-heading">{isBattling ? 'BATTLING...' : 'TRIGGER PAYDAY'}</span>
             {!isBattling && (
-              <span className="font-sans text-sm text-slate-800/70 block mt-1.5">Spawn the hero and slay this month's monsters</span>
+              <span className="font-sans text-xs text-slate-800/70 block mt-1.5">Spawn the hero and slay this month's monsters</span>
             )}
           </button>
         )}
