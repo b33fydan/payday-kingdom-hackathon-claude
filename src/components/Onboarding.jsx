@@ -15,12 +15,12 @@ const TOTAL_STEPS = 5
 
 function StepHeader({ step, onSkip }) {
   return (
-    <div className="flex items-start justify-between mb-2">
+    <div className="flex items-start justify-between mb-4">
       <div>
         <p className="font-pixel text-emerald-400 uppercase tracking-widest text-shadow-label" style={{ fontSize: '0.6rem' }}>
           Begin Your Journey
         </p>
-        <p className="font-sans text-slate-500 uppercase text-xs tracking-wider mt-1">
+        <p className="font-sans text-slate-500 uppercase text-xs tracking-wider mt-1.5">
           Step {step} of {TOTAL_STEPS}
         </p>
       </div>
@@ -108,15 +108,15 @@ export default function Onboarding() {
   const totalBillAmount = bills.reduce((sum, b) => sum + (Number(b.amount) || 0), 0)
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/95 flex items-center justify-center p-4 md:p-6">
+    <div className="fixed inset-0 z-50 bg-slate-950/95 flex items-center justify-center p-6 md:p-10">
       <div className="max-w-2xl w-full">
-        <div className="onboard-card rounded-3xl p-8 md:p-10 animate-fade-in">
+        <div className="onboard-card rounded-3xl p-10 md:p-14 animate-fade-in">
 
           {/* Step 1: Welcome */}
           {step === 1 && (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <StepHeader step={1} onSkip={handleSkip} />
-              <h1 className="font-pixel text-2xl md:text-3xl text-white leading-relaxed text-shadow-title mt-6">
+              <h1 className="font-pixel text-2xl md:text-3xl text-white leading-relaxed text-shadow-title mt-4">
                 Welcome, brave soul.
               </h1>
               <p className="font-sans text-slate-300 text-sm md:text-base leading-relaxed max-w-lg">
@@ -135,9 +135,9 @@ export default function Onboarding() {
 
           {/* Step 2: Name Kingdom */}
           {step === 2 && (
-            <div className="space-y-6">
+            <div className="space-y-7">
               <StepHeader step={2} onSkip={handleSkip} />
-              <h2 className="font-pixel text-xl md:text-2xl text-white leading-relaxed text-shadow-title mt-6">
+              <h2 className="font-pixel text-xl md:text-2xl text-white leading-relaxed text-shadow-title mt-4">
                 Name Your Kingdom
               </h2>
               <p className="font-sans text-slate-400 text-sm leading-relaxed">
@@ -189,9 +189,9 @@ export default function Onboarding() {
 
           {/* Step 3: Income */}
           {step === 3 && (
-            <div className="space-y-6">
+            <div className="space-y-7">
               <StepHeader step={3} onSkip={handleSkip} />
-              <h2 className="font-pixel text-xl md:text-2xl text-white leading-relaxed text-shadow-title mt-6">
+              <h2 className="font-pixel text-xl md:text-2xl text-white leading-relaxed text-shadow-title mt-4">
                 How much treasure arrives each month?
               </h2>
               <p className="font-sans text-slate-400 text-sm leading-relaxed">
@@ -224,9 +224,9 @@ export default function Onboarding() {
 
           {/* Step 4: Bills */}
           {step === 4 && (
-            <div className="space-y-5">
+            <div className="space-y-6">
               <StepHeader step={4} onSkip={handleSkip} />
-              <h2 className="font-pixel text-xl md:text-2xl text-white leading-relaxed text-shadow-title mt-6">
+              <h2 className="font-pixel text-xl md:text-2xl text-white leading-relaxed text-shadow-title mt-4">
                 What monsters threaten your realm?
               </h2>
               <p className="font-sans text-slate-400 text-sm leading-relaxed">
@@ -295,9 +295,9 @@ export default function Onboarding() {
 
           {/* Step 5: Summary */}
           {step === 5 && (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <StepHeader step={5} onSkip={handleComplete} />
-              <h2 className="font-pixel text-2xl md:text-3xl text-white leading-relaxed text-shadow-title mt-6 text-center">
+              <h2 className="font-pixel text-2xl md:text-3xl text-white leading-relaxed text-shadow-title mt-4 text-center">
                 Your Kingdom Awaits.
               </h2>
               <p className="font-sans text-slate-300 text-sm md:text-base leading-relaxed text-center max-w-md mx-auto">

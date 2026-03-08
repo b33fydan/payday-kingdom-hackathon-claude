@@ -84,10 +84,10 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <div className="flex items-center justify-between px-8 py-6 border-b border-white/10">
           <div>
             <h2 className="font-pixel text-sm text-emerald-400 text-shadow-heading">Capture Kingdom</h2>
-            <p className="font-sans text-xs text-slate-500 mt-1">Share your realm with the world</p>
+            <p className="font-sans text-xs text-slate-500 mt-1.5">Share your realm with the world</p>
           </div>
           <button
             onClick={onClose}
@@ -98,7 +98,7 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
         </div>
 
         {/* Preview */}
-        <div className="p-6 flex justify-center bg-black/30">
+        <div className="p-8 flex justify-center bg-black/30">
           {activeUrl ? (
             <img
               src={activeUrl}
@@ -113,7 +113,7 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
         </div>
 
         {/* Kingdom stats bar */}
-        <div className="px-6 py-3 border-t border-white/10 flex items-center gap-4">
+        <div className="px-8 py-4 border-t border-white/10 flex items-center gap-4">
           <span className="font-sans text-xs text-slate-400">
             <span className="text-white font-bold">{kingdomName}</span> · Month {monthsCompleted}
           </span>
@@ -122,7 +122,7 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
         </div>
 
         {/* Mode toggle */}
-        <div className="px-6 py-3 border-t border-white/10 flex items-center gap-3">
+        <div className="px-8 py-4 border-t border-white/10 flex items-center gap-3">
           <button
             onClick={handleStoryToggle}
             disabled={generating}
@@ -141,7 +141,7 @@ export default function ShareModal({ imageBlob, imageUrl, onClose, sceneData }) 
         </div>
 
         {/* Action buttons */}
-        <div className="px-6 py-5 border-t border-white/10 flex gap-3">
+        <div className="px-8 py-6 border-t border-white/10 flex gap-3">
           <button
             onClick={handleDownload}
             className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-pixel text-xs py-3.5 rounded-2xl transition-all active:scale-[0.98] text-shadow-label"

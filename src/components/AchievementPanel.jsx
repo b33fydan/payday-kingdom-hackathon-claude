@@ -45,7 +45,7 @@ export default function AchievementPanel({ onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <div className="flex items-center justify-between px-8 py-6 border-b border-white/10">
           <div>
             <h2 className="font-pixel text-sm text-emerald-400 text-shadow-heading">Kingdom Achievements</h2>
             <p className="font-sans text-xs text-slate-400 mt-1">
@@ -61,7 +61,7 @@ export default function AchievementPanel({ onClose }) {
         </div>
 
         {/* Achievement grid */}
-        <div className="flex-1 overflow-y-auto p-5">
+        <div className="flex-1 overflow-y-auto p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {ACHIEVEMENT_DEFS.map(ach => {
               const unlocked = !!achievements[ach.id]
@@ -73,7 +73,7 @@ export default function AchievementPanel({ onClose }) {
                 <div
                   key={ach.id}
                   className={`panel-card transition-all ${unlocked ? '' : 'opacity-60'}`}
-                  style={{ padding: '1rem 1.25rem' }}
+                  style={{ padding: '1.25rem 1.5rem' }}
                 >
                   <div className="flex items-start gap-3">
                     {/* Icon */}

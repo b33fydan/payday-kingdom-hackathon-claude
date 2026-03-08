@@ -4,25 +4,25 @@ export default function LandingPage({ onStart }) {
       {/* Hero Section */}
       <div className="min-h-screen flex flex-col">
         {/* Top bar */}
-        <div className="px-6 md:px-12 py-6 flex items-center justify-between">
-          <p className="font-pixel text-emerald-400 uppercase tracking-widest text-shadow-label" style={{ fontSize: '0.55rem' }}>
+        <div className="px-8 md:px-16 lg:px-24 py-8 flex items-center justify-between">
+          <h2 className="font-pixel text-emerald-400 uppercase tracking-widest text-shadow-heading text-lg md:text-xl">
             Payday Kingdom
-          </p>
+          </h2>
         </div>
 
         {/* Hero content */}
-        <div className="flex-1 flex flex-col md:flex-row items-center px-6 md:px-12 pb-12 gap-8 md:gap-12">
+        <div className="flex-1 flex flex-col md:flex-row items-center px-8 md:px-16 lg:px-24 pb-16 gap-10 md:gap-16">
           {/* Left: text */}
           <div className="flex-1 max-w-xl">
             <h1 className="font-pixel text-3xl md:text-4xl lg:text-5xl text-white leading-relaxed text-shadow-title" style={{ lineHeight: '1.6' }}>
               Your Budget. Your Kingdom.
             </h1>
-            <p className="font-sans text-slate-400 text-sm md:text-base mt-6 leading-relaxed max-w-md">
+            <p className="font-sans text-slate-400 text-sm md:text-base mt-8 leading-relaxed max-w-md">
               Turn boring bills into tiny bosses, let payday summon your champion, and grow a voxel island that proves discipline can look legendary.
             </p>
 
             {/* Feature pills */}
-            <div className="flex flex-wrap gap-3 mt-8">
+            <div className="flex flex-wrap gap-3 mt-10">
               <div className="panel-card flex items-center gap-2" style={{ padding: '0.6rem 1rem' }}>
                 <span className="text-emerald-400 text-sm">🔒</span>
                 <div>
@@ -47,7 +47,7 @@ export default function LandingPage({ onStart }) {
             </div>
 
             {/* CTA buttons */}
-            <div className="flex flex-wrap gap-4 mt-10">
+            <div className="flex flex-wrap gap-4 mt-12">
               <button
                 onClick={onStart}
                 className="bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-pixel text-xs px-8 py-4 rounded-2xl transition-all shadow-lg shadow-yellow-500/20 active:scale-[0.98] text-shadow-label"
@@ -116,7 +116,7 @@ export default function LandingPage({ onStart }) {
       </div>
 
       {/* How It Works Section */}
-      <div id="how-it-works" className="px-6 md:px-12 py-16 border-t border-white/5">
+      <div id="how-it-works" className="px-8 md:px-16 lg:px-24 py-20 border-t border-white/5">
         <p className="font-pixel text-emerald-400 uppercase tracking-widest text-shadow-label" style={{ fontSize: '0.55rem' }}>
           How It Works
         </p>
@@ -127,24 +127,24 @@ export default function LandingPage({ onStart }) {
           The core premise is simple: every useful financial action gives you an immediate visual payoff. You are never staring at a spreadsheet with no reward.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mt-12">
           {[
             { step: '1', title: 'Enter income and bills', desc: 'Type your monthly income, add recurring bills. Each bill spawns a monster on your island.' },
             { step: '2', title: 'Trigger payday', desc: 'Hit the button, and the hero drops in to battle every monster one by one.' },
             { step: '3', title: 'Grow and share', desc: 'Earn XP, level up, capture screenshots. Your island evolves the more months you survive.' },
             { step: '4', title: 'Repeat monthly', desc: 'Reset bills, add new ones, and watch your kingdom grow with every payday.' },
           ].map(item => (
-            <div key={item.step} className="panel-card" style={{ padding: '1.25rem' }}>
+            <div key={item.step} className="panel-card" style={{ padding: '1.5rem' }}>
               <span className="font-pixel text-emerald-400 text-shadow-label" style={{ fontSize: '0.55rem' }}>Step {item.step}</span>
-              <h3 className="font-sans text-white font-bold text-sm mt-2 text-shadow-label">{item.title}</h3>
-              <p className="font-sans text-slate-500 text-xs mt-2 leading-relaxed">{item.desc}</p>
+              <h3 className="font-sans text-white font-bold text-sm mt-3 text-shadow-label">{item.title}</h3>
+              <p className="font-sans text-slate-500 text-xs mt-3 leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Bottom CTA */}
-      <div className="px-6 md:px-12 py-16 border-t border-white/5 text-center">
+      <div className="px-8 md:px-16 lg:px-24 py-20 border-t border-white/5 text-center">
         <h2 className="font-pixel text-lg md:text-xl text-white text-shadow-heading" style={{ lineHeight: '1.6' }}>
           Ready to build your kingdom?
         </h2>

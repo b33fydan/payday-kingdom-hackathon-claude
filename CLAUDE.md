@@ -145,7 +145,8 @@ All procedural, lazy-initialized, mute-aware. Tone.start() on first user click.
 - [x] TICKET P-002: Visual polish — ambient particles, fog, water anim, screen-shake, shadows, vignette, clouds
 - [x] TICKET P-003: Edge cases — 0 bills peaceful payday, 0 income warning, 3-row monsters, localStorage try/catch, rapid click guard
 - [x] Polish: 5 extra trees (2 large pines, 3 bushes), hero faces camera, 5 swimming fish, castle depth blocks, blue block fix
-- [ ] TICKET P-004: Deploy to Vercel — NOT STARTED
+- [x] TICKET P-004: Deploy to Vercel — LIVE at https://pk-hackathon-claude.vercel.app/
+- [x] TICKET P-005: UI Polish — BudgetPanel card-based redesign, glass HUD overlays, polished Onboarding
 - [ ] Demo prep & submission — NOT STARTED
 
 ## Reference Docs
