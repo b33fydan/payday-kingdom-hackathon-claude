@@ -238,6 +238,10 @@ html, body, #root {
 }
 
 /* Text shadow — voxel block depth effect */
+.text-shadow-title {
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.6), 0 0 20px rgba(251, 191, 36, 0.08);
+}
+
 .text-shadow-heading {
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
 }
